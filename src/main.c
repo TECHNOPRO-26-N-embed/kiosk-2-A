@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <string.h>
 
 int main(void) {
     int choice;
     while(1) {
+        //イの担当
         printf("===Quick Self===\n");
         printf("メインメニュー\n");
         printf("1. 商品カテゴリ\n");
@@ -11,6 +13,7 @@ int main(void) {
         printf("4. 商品検索\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
+        //菊池の担当
         if (choice == 1) {
             printf("商品カテゴリを選びました\n");
             printf("1. ぼんじり\n");
@@ -25,7 +28,8 @@ int main(void) {
             printf("10. つなぎ\n");
             printf("Enter your choice: ");
             scanf("%d", &choice);
-            {
+            //山下の担当
+            while (1){
             printf("レシートを発行しますか?\n");
             printf("1. はい 2. いいえ\n");
             scanf("%d", &choice);
@@ -47,7 +51,9 @@ int main(void) {
             break;
         } else if (choice == 2) {
             return 0;
-        } else if (choice ==4){
+        }
+        //飯田の担当 
+        else if (choice ==4){
             char str[] = "1,2,3,4,5,6,7,8,9,10";//実際は数字ではなく商品名
             char* first_space;
             char*last_space;
