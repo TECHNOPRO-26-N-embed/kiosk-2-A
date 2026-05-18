@@ -4,10 +4,10 @@ int main(void) {
     int choice;
     while(1) {
         printf("===Quick Self===\n");
-        printf("メインメニュー\n");
-        printf("1. 商品カテゴリ\n");
-        printf("2. 店員を呼び出す\n");
-        //printf("3. メインメニューに戻る\n");
+        printf("Main Menu:\n");
+        printf("1. Category\n");
+        printf("2. Call the staff\n");
+        printf("3. メインメニューに戻る\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         if (choice == 1) {
