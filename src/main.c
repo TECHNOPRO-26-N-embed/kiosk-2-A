@@ -11,7 +11,19 @@ int main(void) {
         printf("Enter your choice: ");
         scanf("%d", &choice);
         if (choice == 1) {
-            while (1)
+            printf("商品カテゴリを選びました\n");
+            printf("1. ぼんじり\n");
+            printf("2. もも\n");
+            printf("3. つくね\n");
+            printf("4. かわ\n");
+            printf("5. せせり\n");
+            printf("6. 砂肝\n");
+            printf("7. なんこつ\n");
+            printf("8. ささみ\n");
+            printf("9. ねぎま\n");
+            printf("10. つなぎ\n");
+            printf("Enter your choice: ");
+            scanf("%d", &choice);
             {
             printf("レシートを発行しますか?\n");
             printf("1. はい 2. いいえ\n");
