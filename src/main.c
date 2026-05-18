@@ -11,6 +11,26 @@ int main(void) {
         printf("Enter your choice: ");
         scanf("%d", &choice);
         if (choice == 1) {
+            while (1)
+            {
+            printf("レシートを発行しますか?\n");
+            printf("1. はい 2. いいえ\n");
+            scanf("%d", &choice);
+            if (choice == 1) {
+                printf("レシートを発行します。\n");
+                printf("********************************\n");
+                printf("  ぼんじり  200円\n");
+                printf("  もも  150円\n");
+                printf("合計 350円\n");
+                printf("********************************\n");
+                printf("ありがとうございました！\n");
+            } else if (choice == 2) {
+                printf("ありがとうございました！\n");
+            } else {
+                printf("数値を入力してください\n");
+            }
+            break;
+            }
             break;
         } else if (choice == 2) {
             return 0;
