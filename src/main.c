@@ -31,7 +31,7 @@ int main(void) {
             }
             break;
             }
-            
+            break;
         } else if (choice == 2) {
             return 0;
         } else {
