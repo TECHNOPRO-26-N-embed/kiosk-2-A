@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int change_calculator(int price, int payment) {
+double change_calculator(double price, double payment) {
     if (payment < price) {
         return -1;
     }
