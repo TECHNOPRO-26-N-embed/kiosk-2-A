@@ -36,9 +36,9 @@ int main(void) {
             if (choice == 1) {
                 printf("レシートを発行します。\n");
                 printf("********************************\n");
-                printf("  ぼんじり  200円\n");
-                printf("  もも  150円\n");
-                printf("合計 350円\n");
+                printf("  コーラ  160円\n");
+                printf("  カップラーメン  220円\n");
+                printf("合計 380円\n");
                 printf("********************************\n");
                 printf("ありがとうございました！\n");
                 break;
@@ -64,7 +64,6 @@ int main(void) {
             first_space = strchr(str ,' ');
             printf("商品を検索します。\n");
             printf("%s\n", first_space);
-            break;
      } else {
             printf("Invalid choice. Please try again.\n");
         }
