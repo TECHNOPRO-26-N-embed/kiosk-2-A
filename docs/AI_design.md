@@ -91,13 +91,13 @@ CSV保存・完了画面
 
 
 ヘッダ:
-transaction_id,datetime,item_id,item_name,category,unit_price,quantity,tax_rate,subtotal,tax_amount,total,received,change
+transaction_id,datetime,total,received,change
 
 1行の単位:
 1会計の中の「1商品明細」を1行として保存する。
 
 記録例:
-20260519-0001,2026/05/19 10:15:20,3,トマト,野菜,120,2,8,240,19,259,500,241
+20260519-0001,2026/05/19 10:15:20,259,500,241
 ```
 
 ---
