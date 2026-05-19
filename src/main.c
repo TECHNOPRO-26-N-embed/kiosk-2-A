@@ -17,7 +17,7 @@ int main(void) {
         printf("メインメニュー\n");
         printf("1. 商品カテゴリ\n");
         printf("2. 店員を呼び出す\n");
-        //printf("3. メインメニューに戻る\n");
+        printf("3. 従業員モード(強制終了)\n");
         printf("4. 商品検索\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -49,15 +49,26 @@ int main(void) {
                 printf("合計 350円\n");
                 printf("********************************\n");
                 printf("ありがとうございました！\n");
+                break;
             } else if (choice == 2) {
                 printf("ありがとうございました！\n");
+                break;
             } else {
                 printf("数値を入力してください\n");
+                continue;
             }
-            break;
             }
+<<<<<<< HEAD
             break;
         } 
+=======
+        } else if (choice == 2) {
+            return 0;
+        }else if (choice == 3) {
+            printf("システムを終了します。\n");
+            return 0;
+        }
+>>>>>>> 988f95753d1b66b2587b5496715031b87e7c3268
         //飯田の担当 
         else if (choice ==4){
             char str[] = "1,2,3,4,5,6,7,8,9,10";//実際は数字ではなく商品名
@@ -66,7 +77,6 @@ int main(void) {
             first_space = strchr(str ,' ');
             printf("商品を検索します。\n");
             printf("%s\n , first_space");
-            break;
         }
         else if(choice ==2){
             
