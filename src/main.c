@@ -72,11 +72,7 @@ int main(void) {
         }
         //飯田の担当 
         else if (choice ==4){
-<<<<<<< HEAD
             char str[] = "ぼんじり,もも,つくね,かわ,せせり,砂肝,なんこつ,ささみ,ねぎま,つなぎ";
-=======
-            char str[] = "1,2,3,4,5,6,7,8,9,10";//実際は数字ではなく商品名
->>>>>>> 65612c18d2be410f5103da549b768c308e18564d
             char* first_space;
             char*last_space;
             first_space = strchr(str ,' ');
