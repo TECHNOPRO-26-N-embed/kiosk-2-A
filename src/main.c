@@ -71,11 +71,12 @@ int main(void) {
 >>>>>>> 988f95753d1b66b2587b5496715031b87e7c3268
         //飯田の担当 
         else if (choice ==4){
-            char str[] = "1,2,3,4,5,6,7,8,9,10";//実際は数字ではなく商品名
+            char str[] = "1,2,3,4,5,6,7,8,9,10";
             char* first_space;
             char*last_space;
             first_space = strchr(str ,' ');
             printf("商品を検索します。\n");
+<<<<<<< HEAD
             printf("%s\n , first_space");
         }
         else if(choice ==2){
@@ -96,6 +97,11 @@ int main(void) {
         
         
         } else {
+=======
+            printf("%s\n", first_space);
+            break;
+     } else {
+>>>>>>> 307c075d57ea06a7c98d1f56cc149813a3f5e21f
             printf("Invalid choice. Please try again.\n");
         }
     }
