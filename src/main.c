@@ -58,7 +58,7 @@ int main(void) {
         }
         //飯田の担当 
         else if (choice ==4){
-            char str[] = "1,2,3,4,5,6,7,8,9,10";
+            char str[] = "ぼんじり,もも,つくね,かわ,せせり,砂肝,なんこつ,ささみ,ねぎま,つなぎ";
             char* first_space;
             char*last_space;
             first_space = strchr(str ,' ');
