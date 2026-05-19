@@ -50,7 +50,8 @@ int main(void) {
                 continue;
             }
             }
-        } else if (choice == 2) {
+        } //斎藤の担当、コンフリクトのため
+        else if (choice == 2) {
             return 0;
         }else if (choice == 3) {
             printf("システムを終了します。\n");
