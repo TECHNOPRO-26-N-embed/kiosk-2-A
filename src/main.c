@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include "change_calculator.c"
+#include "tax_eight_ten.c"
 
 int main(void) {
     int choice;
@@ -28,6 +30,18 @@ int main(void) {
             printf("10. つなぎ\n");
             printf("Enter your choice: ");
             scanf("%d", &choice);
+            //イの担当
+            while(1){
+                double kikuchi_kara_number = 1836;
+                double pay;
+                printf("How much did you pay?:");
+                scanf("%lf", &pay);
+                printf("change:%.2lfyen\n", change_calculator(kikuchi_kara_number, pay));
+                if (pay >= kikuchi_kara_number) {
+                    break;
+                }
+                printf("Not enough money.\n");
+            }
             //山下の担当
             while (1){
             printf("レシートを発行しますか?\n");
@@ -58,14 +72,19 @@ int main(void) {
         }
         //飯田の担当 
         else if (choice ==4){
+<<<<<<< HEAD
             char str[] = "ぼんじり,もも,つくね,かわ,せせり,砂肝,なんこつ,ささみ,ねぎま,つなぎ";
+=======
+            char str[] = "1,2,3,4,5,6,7,8,9,10";//実際は数字ではなく商品名
+>>>>>>> 65612c18d2be410f5103da549b768c308e18564d
             char* first_space;
             char*last_space;
             first_space = strchr(str ,' ');
             printf("商品を検索します。\n");
-            printf("%s\n", first_space);
+            printf("%s\n , first_space");
             break;
-     } else {
+        }
+        else {
             printf("Invalid choice. Please try again.\n");
         }
     }
