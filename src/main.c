@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include "change_calculator.c"
+#include "tax_eight_ten.c"
 
 int main(void) {
     int choice;
@@ -28,7 +30,18 @@ int main(void) {
             printf("10. つなぎ\n");
             printf("Enter your choice: ");
             scanf("%d", &choice);
-            
+            //イの担当
+            while(1){
+                double kikuchi_kara_number = 1836;
+                double pay;
+                printf("How much did you pay?:");
+                scanf("%lf", &pay);
+                printf("change:%.2lfyen\n", change_calculator(kikuchi_kara_number, pay));
+                if (pay >= kikuchi_kara_number) {
+                    break;
+                }
+                printf("Not enough money.\n");
+            }
             //山下の担当
             while (1){
             printf("レシートを発行しますか?\n");
