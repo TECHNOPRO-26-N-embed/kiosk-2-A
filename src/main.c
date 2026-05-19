@@ -36,9 +36,9 @@ int main(void) {
             if (choice == 1) {
                 printf("レシートを発行します。\n");
                 printf("********************************\n");
-                printf("  ぼんじり  200円\n");
-                printf("  もも  150円\n");
-                printf("合計 350円\n");
+                printf("  コーラ  160円\n");
+                printf("  カップラーメン  220円\n");
+                printf("合計 380円\n");
                 printf("********************************\n");
                 printf("ありがとうございました！\n");
                 break;
@@ -50,7 +50,8 @@ int main(void) {
                 continue;
             }
             }
-        } else if (choice == 2) {
+        } //斎藤の担当、コンフリクトのため
+        else if (choice == 2) {
             return 0;
         }else if (choice == 3) {
             printf("システムを終了します。\n");
@@ -58,15 +59,13 @@ int main(void) {
         }
         //飯田の担当 
         else if (choice ==4){
-            char str[] = "1,2,3,4,5,6,7,8,9,10";//実際は数字ではなく商品名
+            char str[] = "1,2,3,4,5,6,7,8,9,10";
             char* first_space;
             char*last_space;
             first_space = strchr(str ,' ');
             printf("商品を検索します。\n");
-            printf("%s\n , first_space");
-            break;
-        }
-        else {
+            printf("%s\n", first_space);
+     } else {
             printf("Invalid choice. Please try again.\n");
         }
     }
