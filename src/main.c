@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
+struct StaffCall {
+    int terminalid;
+    int accountingid;
+    char reason[50];
+};
+
+void callStaff(struct StaffCall call);
+
 int main(void) {
     int choice;
     while(1) {
@@ -49,9 +57,7 @@ int main(void) {
             break;
             }
             break;
-        } else if (choice == 2) {
-            return 0;
-        }
+        } 
         //飯田の担当 
         else if (choice ==4){
             char str[] = "1,2,3,4,5,6,7,8,9,10";//実際は数字ではなく商品名
@@ -62,10 +68,33 @@ int main(void) {
             printf("%s\n , first_space");
             break;
         }
-        else {
+        else if(choice ==2){
+            
+
+        int main(void) ;{
+            struct StaffCall call;
+            printf("端末番号を入力してください:");
+            scanf("%d", &call.terminalid);
+            printf("会計番号を入力してください:");
+            scanf("%d", &call.accountingid);
+            printf("呼び出し理由を入力してください:");
+            scanf("%s", call.reason);
+            callStaff(call);
+            
+        }
+
+        
+        
+        } else {
             printf("Invalid choice. Please try again.\n");
         }
     }
     return 0;
 
 }
+void callStaff(struct StaffCall call) {
+            printf("店員を呼び出しました。しばらくお待ちください。\n");
+            printf("端末番号: %d\n", call.terminalid);
+            printf("会計番号: %d\n", call.accountingid);
+            printf("呼び出し理由: %s\n", call.reason);
+        }
