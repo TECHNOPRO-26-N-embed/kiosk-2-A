@@ -64,7 +64,6 @@ int main(void) {
             first_space = strchr(str ,' ');
             printf("商品を検索します。\n");
             printf("%s\n , first_space");
-            break;
         }
         else {
             printf("Invalid choice. Please try again.\n");
