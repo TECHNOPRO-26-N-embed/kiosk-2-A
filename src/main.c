@@ -9,7 +9,7 @@ int main(void) {
         printf("メインメニュー\n");
         printf("1. 商品カテゴリ\n");
         printf("2. 店員を呼び出す\n");
-        //printf("3. メインメニューに戻る\n");
+        printf("3. 従業員モード(強制終了)\n");
         printf("4. 商品検索\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -41,15 +41,19 @@ int main(void) {
                 printf("合計 350円\n");
                 printf("********************************\n");
                 printf("ありがとうございました！\n");
+                break;
             } else if (choice == 2) {
                 printf("ありがとうございました！\n");
+                break;
             } else {
                 printf("数値を入力してください\n");
+                continue;
             }
-            break;
             }
-            break;
         } else if (choice == 2) {
+            return 0;
+        }else if (choice == 3) {
+            printf("システムを終了します。\n");
             return 0;
         }
         //飯田の担当 
