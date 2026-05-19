@@ -236,6 +236,19 @@ int main(void) {
             printf("店員を呼び出しました。少々お待ちください。\n");
         } else {
             printf("システムを終了します。\n");
+<<<<<<< HEAD
+=======
+            return 0;
+        }
+        //飯田の担当 
+        else if (choice ==4){
+            char str[] = "ぼんじり,もも,つくね,かわ,せせり,砂肝,なんこつ,ささみ,ねぎま,つなぎ";
+            char* first_space;
+            char*last_space;
+            first_space = strchr(str ,' ');
+            printf("商品を検索します。\n");
+            printf("%s\n , first_space");
+>>>>>>> ec86820e33a9a625da1abd69516ab882dc6ed9be
             break;
         }
     }
