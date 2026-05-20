@@ -17,23 +17,72 @@ int main(void) {
         scanf("%d", &choice);
         //菊池の担当
         if (choice == 1) {
-            printf("商品カテゴリを選びました\n");
-            printf("1. ぼんじり\n");
-            printf("2. もも\n");
-            printf("3. つくね\n");
-            printf("4. かわ\n");
-            printf("5. せせり\n");
-            printf("6. 砂肝\n");
-            printf("7. なんこつ\n");
-            printf("8. ささみ\n");
-            printf("9. ねぎま\n");
-            printf("10. つなぎ\n");
-            printf("Enter your choice: ");
-            scanf("%d", &choice);
-            //イの担当
+            typedef struct {
+                int id;
+                char name[32];
+                int price;
+                char category[16];
+                int stock;
+                int tax; // 8 or 10
+            } Product;
+            Product products[10] = {
+                {1, "コーラ", 160, "飲料", 35, 8},
+                {2, "お茶", 120, "飲料", 40, 8},
+                {3, "ミネラルウォーター", 100, "飲料", 50, 8},
+                {4, "サンドイッチ", 350, "軽食", 15, 8},
+                {5, "おにぎり", 140, "軽食", 25, 8},
+                {6, "カップラーメン", 220, "軽食", 30, 8},
+                {7, "ポテトチップ", 180, "軽食", 20, 8},
+                {8, "ティッシュ", 300, "日用品", 18, 10},
+                {9, "トイレットペーパー", 250, "日用品", 22, 10},
+                {10, "米", 450, "日用品", 12, 10}
+            };
+            int category_choice;
+            int done = 0;
+            int cart[10] = {0};
+            while (!done) {
+                printf("カテゴリを選択してください\n");
+                printf("1. 飲料\n2. 軽食\n3. 日用品\n4. 完了\n");
+                printf("番号を入力: ");
+                scanf("%d", &category_choice);
+                if (category_choice == 4) break;
+                printf("商品リスト:\n");
+                for (int i = 0; i < 10; i++) {
+                    if ((category_choice == 1 && strcmp(products[i].category, "飲料") == 0) ||
+                        (category_choice == 2 && strcmp(products[i].category, "軽食") == 0) ||
+                        (category_choice == 3 && strcmp(products[i].category, "日用品") == 0)) {
+                        printf("%d. %s %d円 (在庫:%d 税:%d%%)\n", products[i].id, products[i].name, products[i].price, products[i].stock, products[i].tax);
+                    }
+                }
+                printf("商品番号を選択 (0で戻る): ");
+                int prod_choice, qty;
+                scanf("%d", &prod_choice);
+                if (prod_choice == 0) continue;
+                if (prod_choice < 1 || prod_choice > 10) {
+                    printf("無効な商品番号です\n");
+                    continue;
+                }
+                printf("数量を入力: ");
+                scanf("%d", &qty);
+                if (qty < 1 || qty > products[prod_choice-1].stock) {
+                    printf("在庫不足または無効な数量\n");
+                    continue;
+                }
+                cart[prod_choice-1] += qty;
+                printf("カートに追加しました: %s x%d\n", products[prod_choice-1].name, qty);
+            }
+            double total = 0;
+            for (int i = 0; i < 10; i++) {
+                if (cart[i] > 0) {
+                    double item_total = products[i].price * cart[i];
+                    item_total *= (1 + products[i].tax / 100.0);
+                    total += item_total;
+                }
+            }
+            double kikuchi_kara_number = total;
+            printf("\n合計金額(税金含む): %.0lf円\n", kikuchi_kara_number);
             int go_menu = 0;
             while(1){
-                double kikuchi_kara_number = 1836;
                 double pay;
                 char buf[32];
                 printf("お支払い金額を入力してください (数字 or mでメニュー):");
