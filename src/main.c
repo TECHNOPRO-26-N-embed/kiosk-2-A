@@ -25,10 +25,6 @@ int main(void) {
         scanf("%d", &choice);
         //菊池の担当
         if (choice == 1) {
-<<<<<<< HEAD
-
-=======
->>>>>>> ea4600fb91a002ca5426575f1b8482f5d3577e63
             printf("商品カテゴリを選びました\n");
             printf("1. ぼんじり\n");
             printf("2. もも\n");
@@ -42,8 +38,6 @@ int main(void) {
             printf("10. つなぎ\n");
             printf("Enter your choice: ");
             scanf("%d", &choice);
-<<<<<<< HEAD
-=======
             //イの担当
             while(1){
                 double kikuchi_kara_number = 1836;
@@ -56,7 +50,6 @@ int main(void) {
                 }
                 printf("Not enough money.\n");
             }
->>>>>>> ea4600fb91a002ca5426575f1b8482f5d3577e63
             //山下の担当
             while (1){
             printf("レシートを発行しますか?\n");
@@ -79,24 +72,24 @@ int main(void) {
                 continue;
             }
             }
-<<<<<<< HEAD
-
-            break;
-        } 
-
-
-            purchase_flow();
-
-=======
->>>>>>> ea4600fb91a002ca5426575f1b8482f5d3577e63
         } else if (choice == 2) {
+            struct StaffCall call;
+
+            printf("端末番号を入力してください: ");
+            scanf("%d", &call.terminalid);
+
+            printf("会計番号を入力してください: ");
+            scanf("%d", &call.accountingid);
+
+            printf("理由を入力してください: ");
+            scanf("%s", call.reason);
+
+            callStaff(call);
+
+            printf("店員を呼び出しています。\n");
             return 0;
         }else if (choice == 3) {
             printf("システムを終了します。\n");
-<<<<<<< HEAD
-
-=======
->>>>>>> ea4600fb91a002ca5426575f1b8482f5d3577e63
             return 0;
         }
 
@@ -110,30 +103,6 @@ int main(void) {
 
 
             printf("%s\n , first_space");
-<<<<<<< HEAD
-        }
-        else if(choice ==2){
-            
-
-        int main(void) ;{
-            struct StaffCall call;
-            printf("端末番号を入力してください:");
-            scanf("%d", &call.terminalid);
-            printf("会計番号を入力してください:");
-            scanf("%d", &call.accountingid);
-            printf("呼び出し理由を入力してください:");
-            scanf("%s", call.reason);
-            callStaff(call);
-            
-        }
-
-        
-        
-        } else {
-
-            printf("%s\n", first_space);
-=======
->>>>>>> ea4600fb91a002ca5426575f1b8482f5d3577e63
             break;
      } else {
             printf("Invalid choice. Please try again.\n");
@@ -146,22 +115,6 @@ int main(void) {
             printf("Invalid choice. Please try again.\n");
         }
     }
-<<<<<<< HEAD
-
-
-
-void callStaff(struct StaffCall call) {
-            printf("店員を呼び出しました。しばらくお待ちください。\n");
-            printf("端末番号: %d\n", call.terminalid);
-            printf("会計番号: %d\n", call.accountingid);
-            printf("呼び出し理由: %s\n", call.reason);
-        }
-
-    return 0;
-    }
-
-=======
     return 0;
 
 }
->>>>>>> ea4600fb91a002ca5426575f1b8482f5d3577e63
