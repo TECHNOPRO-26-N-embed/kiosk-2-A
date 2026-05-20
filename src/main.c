@@ -31,38 +31,52 @@ int main(void) {
             printf("Enter your choice: ");
             scanf("%d", &choice);
             //イの担当
+            int go_menu = 0;
             while(1){
                 double kikuchi_kara_number = 1836;
                 double pay;
-                printf("How much did you pay?:");
-                scanf("%lf", &pay);
-                printf("change:%.2lfyen\n", change_calculator(kikuchi_kara_number, pay));
-                if (pay >= kikuchi_kara_number) {
-                    break;
+                char buf[32];
+                printf("お支払い金額を入力してください (数字 or mでメニュー):");
+                if (scanf("%lf", &pay) == 1) {
+                    printf("お釣り: %.2lf円\n", change_calculator(kikuchi_kara_number, pay));
+                    if (pay >= kikuchi_kara_number) {
+                        break;
+                    }
+                    printf("お金が足りません。\n");
+                } else {
+                    scanf("%31s", buf);
+                    if (strcmp(buf, "m") == 0 || strcmp(buf, "M") == 0) {
+                        go_menu = 1;
+                        break;
+                    } else {
+                        printf("数値またはmを入力してください。\n");
+                        int c;
+                        while ((c = getchar()) != '\n' && c != EOF) {}
+                    }
                 }
-                printf("Not enough money.\n");
             }
+            if (go_menu) continue;
             //山下の担当
             while (1){
-            printf("レシートを発行しますか?\n");
-            printf("1. はい 2. いいえ\n");
-            scanf("%d", &choice);
-            if (choice == 1) {
-                printf("レシートを発行します。\n");
-                printf("********************************\n");
-                printf("  ぼんじり  200円\n");
-                printf("  もも  150円\n");
-                printf("合計 350円\n");
-                printf("********************************\n");
-                printf("ありがとうございました！\n");
-                break;
-            } else if (choice == 2) {
-                printf("ありがとうございました！\n");
-                break;
-            } else {
-                printf("数値を入力してください\n");
-                continue;
-            }
+                printf("レシートを発行しますか?\n");
+                printf("1. はい 2. いいえ\n");
+                scanf("%d", &choice);
+                if (choice == 1) {
+                    printf("レシートを発行します。\n");
+                    printf("********************************\n");
+                    printf("  ぼんじり  200円\n");
+                    printf("  もも  150円\n");
+                    printf("合計 350円\n");
+                    printf("********************************\n");
+                    printf("ありがとうございました！\n");
+                    break;
+                } else if (choice == 2) {
+                    printf("ありがとうございました！\n");
+                    break;
+                } else {
+                    printf("数値を入力してください\n");
+                    continue;
+                }
             }
         } else if (choice == 2) {
             return 0;
