@@ -111,10 +111,4 @@ int main(void) {
             break;
 
         }
-        else {
-            printf("Invalid choice. Please try again.\n");
-        }
-    }
-    return 0;
-
-}
+    
