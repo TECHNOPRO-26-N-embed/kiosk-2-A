@@ -3,62 +3,13 @@
 #include "change_calculator.c"
 #include "tax_eight_ten.c"
 
-static void normalize_for_search(const char *input, char *output, int output_size) {
-    int in_idx = 0;
-    int out_idx = 0;
-    const unsigned char *p = (const unsigned char *)input;
+struct StaffCall {
+    int terminalid;
+    int accountingid;
+    char reason[50];
+};
 
-    while (p[in_idx] != '\0' && out_idx < output_size - 1) {
-        if (p[in_idx + 1] != '\0' && p[in_idx + 2] != '\0') {
-            // 全角数字 ０-９ -> 半角数字 0-9
-            if (p[in_idx] == 0xEF && p[in_idx + 1] == 0xBC && p[in_idx + 2] >= 0x90 && p[in_idx + 2] <= 0x99) {
-                output[out_idx++] = '0' + (char)(p[in_idx + 2] - 0x90);
-                in_idx += 3;
-                continue;
-            }
-            // 全角英大文字 Ａ-Ｚ -> 半角英大文字 A-Z
-            if (p[in_idx] == 0xEF && p[in_idx + 1] == 0xBC && p[in_idx + 2] >= 0xA1 && p[in_idx + 2] <= 0xBA) {
-                output[out_idx++] = 'A' + (char)(p[in_idx + 2] - 0xA1);
-                in_idx += 3;
-                continue;
-            }
-            // 全角英小文字 ａ-ｚ -> 半角英小文字 a-z
-            if (p[in_idx] == 0xEF && p[in_idx + 1] == 0xBD && p[in_idx + 2] >= 0x81 && p[in_idx + 2] <= 0x9A) {
-                output[out_idx++] = 'a' + (char)(p[in_idx + 2] - 0x81);
-                in_idx += 3;
-                continue;
-            }
-            // 全角ハイフン(－)と半角長音(ｰ)は長音(ー)へ統一
-            if ((p[in_idx] == 0xEF && p[in_idx + 1] == 0xBC && p[in_idx + 2] == 0x8D) ||
-                (p[in_idx] == 0xEF && p[in_idx + 1] == 0xBD && p[in_idx + 2] == 0xB0)) {
-                if (out_idx + 3 >= output_size) {
-                    break;
-                }
-                output[out_idx++] = (char)0xE3;
-                output[out_idx++] = (char)0x83;
-                output[out_idx++] = (char)0xBC;
-                in_idx += 3;
-                continue;
-            }
-        }
-
-        // 半角ハイフン(-)は長音(ー)へ統一
-        if (p[in_idx] == '-') {
-            if (out_idx + 3 >= output_size) {
-                break;
-            }
-            output[out_idx++] = (char)0xE3;
-            output[out_idx++] = (char)0x83;
-            output[out_idx++] = (char)0xBC;
-            in_idx++;
-            continue;
-        }
-
-        output[out_idx++] = (char)p[in_idx++];
-    }
-
-    output[out_idx] = '\0';
-}
+void callStaff(struct StaffCall call);
 
 int main(void) {
     int choice;
@@ -257,12 +208,27 @@ int main(void) {
                     continue;
                 }
             }
-        } else if (choice == 4) {
+        } else if (choice == 2) {
+            struct StaffCall call;
+
+            printf("端末番号を入力してください: ");
+            scanf("%d", &call.terminalid);
+
+            printf("会計番号を入力してください: ");
+            scanf("%d", &call.accountingid);
+
+            printf("理由を入力してください: ");
+            scanf("%s", call.reason);
+
+            callStaff(call);
+
+            printf("店員を呼び出しています。\n");
             return 0;
         }else if (choice == 5) {
             printf("システムを終了します。\n");
             return 0;
         }
+
         //飯田の担当 
         else if (choice ==4){
                 typedef struct {
@@ -416,8 +382,9 @@ int main(void) {
         }
         else {
             printf("Invalid choice. Please try again.\n");
-        }
-    }
-    return 0;
+            printf("%s\n , first_space");
 
-}
+            break;
+
+        }
+    
