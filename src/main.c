@@ -34,6 +34,45 @@ static Product products[PRODUCT_COUNT] = {
 
 static const char *categoryNames[] = {"", "飲み物", "食べ物", "一用品"};
 
+void display_receipt(const Product products[], const CartItem cart[], int cartCount) {
+    double total = 0.0;
+    double tax_8 = 0.0;
+    double tax_10 = 0.0;
+
+    printf("\n--- レシート ---\n");
+    for (int i = 0; i < cartCount; i++) {
+        const Product *p = &products[cart[i].productIndex];
+        double subtotal = p->price * cart[i].quantity;
+        double tax = 0.0;
+        int tax_rate = 8;
+
+        if (p->category == 3) {
+            tax_rate = 10;
+        }
+
+        if (tax_rate == 8) {
+            tax = subtotal * 0.08;
+            tax_8 += tax;
+        } else {
+            tax = subtotal * 0.10;
+            tax_10 += tax;
+        }
+
+        total += subtotal + tax;
+        printf("%s x %d @ %d円 = %.0f円 (税 %.0f円)\n",
+               p->name,
+               cart[i].quantity,
+               p->price,
+               subtotal + tax,
+               tax);
+    }
+
+    printf("\n税率8%%: %.0f円\n", tax_8);
+    printf("税率10%%: %.0f円\n", tax_10);
+    printf("合計: %.0f円\n", total);
+    printf("---\n\n");
+}
+
 int main(void) {
     int choice;
     while(1) {
@@ -214,27 +253,22 @@ int main(void) {
                     break;
                 }
             }
-            //山下の担当
             while (1){
-            printf("レシートを発行しますか?\n");
-            printf("1. はい 2. いいえ\n");
-            scanf("%d", &choice);
-            if (choice == 1) {
-                printf("レシートを発行します。\n");
-                printf("********************************\n");
-                printf("  ぼんじり  200円\n");
-                printf("  もも  150円\n");
-                printf("合計 350円\n");
-                printf("********************************\n");
-                printf("ありがとうございました！\n");
-                break;
-            } else if (choice == 2) {
-                printf("ありがとうございました！\n");
-                break;
-            } else {
-                printf("数値を入力してください\n");
-                continue;
-            }
+                printf("レシートを発行しますか?\n");
+                printf("1. はい 2. いいえ\n");
+                scanf("%d", &choice);
+                if (choice == 1) {
+                    printf("レシートを発行します。\n");
+                    display_receipt(products, cart, cartCount);
+                    printf("ありがとうございました！\n");
+                    break;
+                } else if (choice == 2) {
+                    printf("ありがとうございました！\n");
+                    break;
+                } else {
+                    printf("数値を入力してください\n");
+                    continue;
+                }
             }
         } else if (choice == 4) {
             return 0;
