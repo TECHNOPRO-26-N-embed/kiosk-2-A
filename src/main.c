@@ -74,56 +74,192 @@ int main(void) {
         scanf("%d", &choice);
         //菊池の担当
         if (choice == 1) {
-            printf("商品カテゴリを選びました\n");
-            printf("1. ぼんじり\n");
-            printf("2. もも\n");
-            printf("3. つくね\n");
-            printf("4. かわ\n");
-            printf("5. せせり\n");
-            printf("6. 砂肝\n");
-            printf("7. なんこつ\n");
-            printf("8. ささみ\n");
-            printf("9. ねぎま\n");
-            printf("10. つなぎ\n");
-            printf("Enter your choice: ");
-            scanf("%d", &choice);
-            //イの担当
-            while(1){
-                double kikuchi_kara_number = 1836;
-                double pay;
-                printf("How much did you pay?:");
-                scanf("%lf", &pay);
-                printf("change:%.2lfyen\n", change_calculator(kikuchi_kara_number, pay));
-                if (pay >= kikuchi_kara_number) {
-                    break;
-                }
-                printf("Not enough money.\n");
+            CartItem cart[MAX_CART_ITEMS];
+            int cartCount = 0;
+            int addMore = 1;
+            int i;
+
+            for (i = 0; i < MAX_CART_ITEMS; i++) {
+                cart[i].productIndex = -1;
+                cart[i].quantity = 0;
             }
-            //山下の担当
-            while (1){
-            printf("レシートを発行しますか?\n");
-            printf("1. はい 2. いいえ\n");
-            scanf("%d", &choice);
-            if (choice == 1) {
-                printf("レシートを発行します。\n");
-                printf("********************************\n");
-                printf("  ぼんじり  200円\n");
-                printf("  もも  150円\n");
-                printf("合計 350円\n");
-                printf("********************************\n");
-                printf("ありがとうございました！\n");
-                break;
-            } else if (choice == 2) {
-                printf("ありがとうございました！\n");
-                break;
-            } else {
-                printf("数値を入力してください\n");
+
+            while (addMore) {
+                int categoryChoice;
+                int productNumber;
+                int quantity;
+                int productIndex = -1;
+                int foundCategoryProduct = 0;
+
+                printf("\n商品カテゴリを選択してください\n");
+                printf("1. 飲み物\n");
+                printf("2. 食べ物\n");
+                printf("3. 一用品\n");
+                printf("Enter category number: ");
+                if (scanf("%d", &categoryChoice) != 1) {
+                    printf("数値を入力してください。\n");
+                    while (getchar() != '\n') {}
+                    continue;
+                }
+
+                if (categoryChoice < 1 || categoryChoice > 3) {
+                    printf("カテゴリ番号が不正です。\n");
+                    continue;
+                }
+
+                printf("\n[%s] の商品一覧\n", categoryNames[categoryChoice]);
+                for (i = 0; i < PRODUCT_COUNT; i++) {
+                    if (products[i].category == categoryChoice) {
+                        printf("%d. %s (%d円 / 在庫:%d)\n",
+                               products[i].number,
+                               products[i].name,
+                               products[i].price,
+                               products[i].stock);
+                        foundCategoryProduct = 1;
+                    }
+                }
+
+                if (!foundCategoryProduct) {
+                    printf("このカテゴリには商品がありません。\n");
+                    continue;
+                }
+
+                printf("商品番号を入力してください: ");
+                if (scanf("%d", &productNumber) != 1) {
+                    printf("数値を入力してください。\n");
+                    while (getchar() != '\n') {}
+                    continue;
+                }
+
+                printf("数量を入力してください(1以上): ");
+                if (scanf("%d", &quantity) != 1) {
+                    printf("数値を入力してください。\n");
+                    while (getchar() != '\n') {}
+                    continue;
+                }
+
+                if (quantity < 1) {
+                    printf("数量は1以上の整数を入力してください。\n");
+                    continue;
+                }
+
+                for (i = 0; i < PRODUCT_COUNT; i++) {
+                    if (products[i].number == productNumber && products[i].category == categoryChoice) {
+                        productIndex = i;
+                        break;
+                    }
+                }
+
+                if (productIndex == -1) {
+                    printf("商品番号が不正です。\n");
+                    continue;
+                }
+
+                if (quantity > products[productIndex].stock) {
+                    printf("在庫不足です。(現在在庫:%d)\n", products[productIndex].stock);
+                    continue;
+                }
+
+                for (i = 0; i < cartCount; i++) {
+                    if (cart[i].productIndex == productIndex) {
+                        cart[i].quantity += quantity;
+                        break;
+                    }
+                }
+
+                if (i == cartCount) {
+                    if (cartCount >= MAX_CART_ITEMS) {
+                        printf("購入リストが上限です。\n");
+                        break;
+                    }
+                    cart[cartCount].productIndex = productIndex;
+                    cart[cartCount].quantity = quantity;
+                    cartCount++;
+                }
+
+                products[productIndex].stock -= quantity;
+                printf("購入リストに追加しました: %s x %d\n", products[productIndex].name, quantity);
+
+                printf("追加購入しますか? (1:はい 2:いいえ): ");
+                if (scanf("%d", &choice) != 1) {
+                    printf("数値を入力してください。\n");
+                    while (getchar() != '\n') {}
+                    addMore = 0;
+                } else if (choice == 1) {
+                    addMore = 1;
+                } else {
+                    addMore = 0;
+                }
+            }
+
+            if (cartCount == 0) {
+                printf("購入商品がありません。メインメニューに戻ります。\n");
                 continue;
             }
+
+            {
+                double subTotal = 0;
+                double taxTotal = 0;
+                double grandTotal;
+                double pay;
+
+                printf("\n=== 会計処理 ===\n");
+                for (i = 0; i < cartCount; i++) {
+                    Product p = products[cart[i].productIndex];
+                    double lineSubTotal = p.price * cart[i].quantity;
+                    double taxRate = eight_or_ten(p.number);
+                    double lineTax = lineSubTotal * taxRate;
+
+                    subTotal += lineSubTotal;
+                    taxTotal += lineTax;
+
+                    printf("%s x %d = %.0f円 (税率%.0f%%)\n",
+                           p.name,
+                           cart[i].quantity,
+                           lineSubTotal,
+                           taxRate * 100);
+                }
+
+                grandTotal = subTotal + taxTotal;
+                printf("小計: %.0f円\n", subTotal);
+                printf("税額: %.0f円\n", taxTotal);
+                printf("合計: %.0f円\n", grandTotal);
+
+                while (1) {
+                    printf("お支払い金額を入力してください: ");
+                    if (scanf("%lf", &pay) != 1) {
+                        printf("数値を入力してください。\n");
+                        while (getchar() != '\n') {}
+                        continue;
+                    }
+                    if (change_calculator(grandTotal, pay) < 0) {
+                        printf("入金額が不足しています。\n");
+                        continue;
+                    }
+                    printf("おつり: %.2f円\n", change_calculator(grandTotal, pay));
+                    break;
+                }
             }
-        } else if (choice == 2) {
+            while (1){
+                printf("レシートを発行しますか?\n");
+                printf("1. はい 2. いいえ\n");
+                scanf("%d", &choice);
+                if (choice == 1) {
+                    printf("レシートを発行します。\n");
+                    display_receipt(products, cart, cartCount);
+                    printf("ありがとうございました！\n");
+                    break;
+                } else if (choice == 2) {
+                    printf("ありがとうございました！\n");
+                    break;
+                } else {
+                    printf("数値を入力してください\n");
+                    continue;
+                }
+            }
+        } else if (choice == 4) {
             return 0;
-        }else if (choice == 3) {
+        }else if (choice == 5) {
             printf("システムを終了します。\n");
             return 0;
         }
