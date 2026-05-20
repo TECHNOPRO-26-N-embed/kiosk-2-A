@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "change_calculator.c"
 #include "tax_eight_ten.c"
+
+#define PRODUCT_COUNT 10
+#define MAX_CART_ITEMS 10
 
 struct StaffCall {
     int terminalid;
@@ -9,7 +13,78 @@ struct StaffCall {
     char reason[50];
 };
 
+typedef struct {
+    int number;
+    const char *name;
+    int price;
+    int category;
+    int stock;
+    int tax_rate;
+} Product;
+
+typedef struct {
+    int productIndex;
+    int quantity;
+} CartItem;
+
+static Product products[PRODUCT_COUNT] = {
+    {1, "コーラ", 160, 1, 35, 8},
+    {2, "お茶", 120, 1, 40, 8},
+    {3, "ミネラルウォーター", 100, 1, 50, 8},
+    {4, "サンドイッチ", 350, 2, 15, 8},
+    {5, "おにぎり", 140, 2, 25, 8},
+    {6, "カップラーメン", 220, 2, 30, 8},
+    {7, "ポテトチップ", 180, 2, 20, 8},
+    {8, "ティッシュ", 300, 3, 18, 10},
+    {9, "歯ブラシ", 250, 3, 22, 10},
+    {10, "洗剤", 450, 3, 12, 10}
+};
+
+static const char *categoryNames[] = {"", "飲み物", "食べ物", "一用品"};
+
+void normalize_for_search(const char *input, char *output, size_t out_size) {
+    size_t i = 0;
+    for (; input[i] != '\0' && i + 1 < out_size; i++) {
+        output[i] = (char)tolower((unsigned char)input[i]);
+    }
+    output[i] = '\0';
+}
+
+void display_receipt(const Product products[], const CartItem cart[], int cartCount) {
+    double total = 0.0;
+    double tax_8 = 0.0;
+    double tax_10 = 0.0;
+
+    printf("********************************\n");
+    for (int i = 0; i < cartCount; i++) {
+        const Product *p = &products[cart[i].productIndex];
+        double line_subtotal = p->price * cart[i].quantity;
+        double line_tax = line_subtotal * (p->tax_rate / 100.0);
+        double line_total = line_subtotal + line_tax;
+
+        if (p->tax_rate == 8) {
+            tax_8 += line_tax;
+        } else if (p->tax_rate == 10) {
+            tax_10 += line_tax;
+        }
+
+        total += line_total;
+        printf("  %s x %d  %.0f円\n", p->name, cart[i].quantity, line_total);
+    }
+    printf("税率8%% 税額: %.0f円\n", tax_8);
+    printf("税率10%% 税額: %.0f円\n", tax_10);
+    printf("合計 %.0f円\n", total);
+    printf("********************************\n");
+}
+
 void callStaff(struct StaffCall call);
+
+void callStaff(struct StaffCall call) {
+    printf("[店員呼び出し] 端末:%d 会計:%d 理由:%s\n",
+           call.terminalid,
+           call.accountingid,
+           call.reason);
+}
 
 int main(void) {
     int choice;
@@ -382,9 +457,9 @@ int main(void) {
         }
         else {
             printf("Invalid choice. Please try again.\n");
-            printf("%s\n , first_space");
 
             break;
 
         }
-    
+    }
+}
